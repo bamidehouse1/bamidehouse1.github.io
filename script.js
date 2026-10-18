@@ -14,3 +14,29 @@ if (menuToggle && navLinks) {
 }
 const year = document.getElementById('year');
 if (year) year.textContent = new Date().getFullYear();
+
+// Interactive portfolio gallery filters
+const galleryFilters = document.querySelectorAll('.gallery-filter');
+const galleryItems = document.querySelectorAll('.gallery-item');
+
+galleryFilters.forEach(button => {
+  button.addEventListener('click', () => {
+    const selectedCategory = button.dataset.filter;
+
+    // Update the active button
+    galleryFilters.forEach(filter => {
+      const isActive = filter === button;
+      filter.classList.toggle('active', isActive);
+      filter.setAttribute('aria-pressed', String(isActive));
+    });
+
+    // Show items matching the selected category
+    galleryItems.forEach(item => {
+      const matchesCategory =
+        selectedCategory === 'all' ||
+        item.dataset.category === selectedCategory;
+
+      item.hidden = !matchesCategory;
+    });
+  });
+});
